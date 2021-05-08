@@ -75,9 +75,10 @@ resource "azurerm_kubernetes_cluster" "main" {
   }
 
   dynamic "identity" {
-    for_each = var.client_id == "" || var.client_secret == "" ? ["identity"] : []
+    #for_each = var.client_id == "" || var.client_secret == "" ? ["identity"] : []
     content {
-      type = "SystemAssigned"
+      type = "UserAssigned"
+      user_assigned_identity_id = var.client_id
     }
   }
 
