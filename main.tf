@@ -74,12 +74,13 @@ resource "azurerm_kubernetes_cluster" "main" {
     }
   }
 
-  dynamic "identity" {
+  #dynamic "identity" {
+  identity {
     #for_each = var.client_id == "" || var.client_secret == "" ? ["identity"] : []
-    content {
+    # content {
       type = "UserAssigned"
       user_assigned_identity_id = var.client_id
-    }
+    # }
   }
 
   addon_profile {
@@ -94,7 +95,10 @@ resource "azurerm_kubernetes_cluster" "main" {
     azure_policy {
       enabled = var.enable_azure_policy
     }
-
+    ingress_application_gateway {
+      enabled = true
+      gateway_id = var.ingress_gateway_id
+    }
     oms_agent {
       enabled                    = var.enable_log_analytics_workspace
       log_analytics_workspace_id = var.enable_log_analytics_workspace ? azurerm_log_analytics_workspace.main[0].id : null
