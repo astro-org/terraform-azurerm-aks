@@ -259,3 +259,7 @@ variable "agents_max_pods" {
   type        = number
   default     = null
 }
+
+variable "ingress_gateway_id" {
+  type = string
+}
